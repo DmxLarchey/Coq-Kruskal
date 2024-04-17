@@ -1,4 +1,6 @@
-# The Coq-Kruskal project
+# The Coq-Kruskal project by [D. Larchey-Wendling](https://members.loria.fr/DLarchey/files)
+
+## The contents
 
 List of sub-repositories:
 - [`Kruskal-Trees`](https://github.com/DmxLarchey/Kruskal-Trees):
@@ -9,3 +11,10 @@ List of sub-repositories:
 - [`Kruskal-Theorems`](https://github.com/DmxLarchey/Kruskal-Theorems)
 
 and derives several instances of [Kruskal's tree theorem](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem)
+
+## Historical remarks on the project
+
+- origins
+- motivations for a reboot
+- the split
+- the end result
