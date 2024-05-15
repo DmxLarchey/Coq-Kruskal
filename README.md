@@ -38,7 +38,7 @@ _<p style="text-align: center;">If a (base) relation is a WQO on a set of nodes,
 
 The real motivation came after the reading of Jean Goubault-Larrecq's [_A Constructive Proof of the Topological Kruskal Theorem_](https://doi.org/10.1007/978-3-642-40313-2_3). Although it was the starting point; the approach developped in that paper was not followed in the end. According to Jean Goubault-Larrecq, it could not have led to the full result (that I wished for) because it implied assuming that the base relation on nodes was _decidable_. This constraint turned out to be the same assumption as the one made by Monika Seinsenberger in [her PhD thesis](https://doi.org/10.1007/978-94-015-9757-9_21). 
 
-Then I turned to the work of people arround Thierry Coquand who characterized WQOs as _Almost Full_ (AF) relations using inductive predicates, either the specialized `af` predicate or the more general `bar` inductive predicates. Notice that there are also characterizations of AF relations using sequences but they suffer the same issues as the classical characterization of WQOs. I later discovered this beautiful intuition by Coquand explaining why using sequences the characterizes WQOs or AF relations was **problematic constructivelly**. The problem comes from the universal quantification over sequence, which constructivelly is unable to capture sequence that are not governed by a law (aka a lambda term).
+Then I turned to the work of people arround Thierry Coquand who characterized WQOs as _Almost Full_ (AF) relations using inductive predicates, either the specialized `af` predicate or the more general `bar` inductive predicates. Notice that there are also characterizations of AF relations using sequences but they suffer the same issues as the classical characterization of WQOs. I later discovered this [beautiful intuition by Coquand](https://www.cairn-int.info/journal-revue-internationale-de-philosophie-2004-4-page-483.htm) \[7\] explaining why using sequences the characterizes WQOs or AF relations was problematic constructivelly: the issue comes from the universal quantification over infinite sequences as of type `nat → X`, which constructivelly does not to cover growing sequences that are not governed by a law (aka a lambda term).
 
 IMHO, the best introduction the AF relations characterized with a specific inductive predicate can be found in [_Stop when you are Almost-Full: Adventures in constructive termination_](https://doi.org/10.1007/978-3-642-32347-8_17) by Coquand et al, of which the main contribution is a proof of constructive formulation of Ramsey's theorem: the intersection of two AF relations is an AF relation. 
 
@@ -61,6 +61,7 @@ Veldman's proof is not type theoretic. It is "formalized" in a kind of intuition
 - \[4\] [_An Interpretation of the Fan Theorem in Type Theory_](https://doi.org/10.1007/3-540-48167-2_7) Daniel Firdlender
 - \[5\] [_Higman's lemma in type theory_](https://doi.org/10.1007/BFb0097789) Daniel Firdlender
 - \[6\] [_An intuitionistic proof of Kruskal's Theorem_](https://doi.org/10.1007/s00153-003-0207-x) Win Veldman
+- \[7\] [_About Brouwer’s Fan Theorem_](https://www.cairn-int.info/journal-revue-internationale-de-philosophie-2004-4-page-483.htm) Thierry Coquand
 
 ### Motivations for a reboot
 
