@@ -1,4 +1,4 @@
-# The Coq-Kruskal project by [D. Larchey-Wendling](https://members.loria.fr/DLarchey/files)
+# The `Coq-Kruskal` project by [D. Larchey-Wendling](https://members.loria.fr/DLarchey/files)
 
 ## Summary
 
