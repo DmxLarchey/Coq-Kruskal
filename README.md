@@ -30,7 +30,7 @@ Side contributions and applications:
 ### The origins
 
 The idea to implement a constructive proof of [Kruskal's tree theorem](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem)
-in Coq came to my mind in 2015. The statement of Kruskal's tree theorem concerns the closure properties of the notion of _Well Quasi Order_ (WQO). Classically characterized, a WQO `R : X → X → Prop` is a quasi order such that any infinite sequence `s : nat → X` contains a good (ie increasing pair), ie there are `i < j` such that `R sᵢ	sⱼ`. However, constructivelly, this characterization is too weak (see below).  
+in Coq came to my mind in 2015. The statement of Kruskal's tree theorem concerns the closure properties of the notion of _Well Quasi Order_ (WQO). Classically characterized, a WQO `R : X → X → Prop` is a quasi order such that any infinite sequence `s : nat → X` contains a good (ie increasing pair), ie there are `i < j` such that `R sᵢ sⱼ`. However, constructivelly, this characterization is too weak (see below).  
 
 Kruskal's tree theorem states: 
 
