@@ -53,7 +53,13 @@ After Higman's lemma, I naively tried to generalize the approach the binary tree
 
 So I decided to study the only (published) intuitionistic proof of Kruskal's tree theorem avoiding the decidability issue: [_An intuitionistic proof of Kruskal's Theorem_](https://doi.org/10.1007/s00153-003-0207-x) by Wim Veldman. I started to implement the proof of Higman's theorem to be found there, first on binary trees. Higman's theorem states that the nested product embedding is AF for tree of bounded breadth. This made me understand that Fridlender's and Seisenberger's proofs were just instances of Veldman's proof of Higman's tree, adapted to type theory.
 
-Veldman's proof is not type theoretic. It is "formalized" in a kind of intuitionistic set theory but most data structures are encoded as natural numbers, which makes it quite hard to decifer. Also, the notion of AF relation used there is based on sequences. To be able to work with this too weak notion, Veldman's postulates _Brouwer's thesis_, basically stating that if a relation is AF then there is a _stump_ that witnesses this property. I immediatly recognised that stumps were identical to the structure of inductive `af` predicate, representable as a _well founded tree_.  
+Veldman's proof is not type theoretic. It is "formalized" in a kind of intuitionistic set theory but most data structures are encoded as natural numbers, which makes it quite hard to decifer. Also, the notion of AF relation used there is based on sequences. To be able to work with this too weak notion, Veldman's postulates _Brouwer's thesis_, basically stating that if a relation is AF then there is a _stump_ that witnesses this property. I immediatly recognised that stumps were identical to the structure of inductive `af` predicate, representable as a _well founded tree_.
+
+- \[1\] [_A Constructive Proof of the Topological Kruskal Theorem_](https://doi.org/10.1007/978-3-642-40313-2_3) Jean Goubault-Larrecq.
+- \[2\] [_Stop when you are Almost-Full: Adventures in constructive termination_](https://doi.org/10.1007/978-3-642-32347-8_17) Dimitrios Vytiniotis, Thierry Coquand, David Wahlstedt.
+- \[3\] [_Kruskal’s Tree Theorem in a Constructive Theory of Inductive Definitions_](https://doi.org/10.1007/978-94-015-9757-9_21) Monika Seisenberger.
+- \[4\] [_An Interpretation of the Fan Theorem in Type Theory_](https://doi.org/10.1007/3-540-48167-2_7) Daniel Firdlender
+- \[5\] [_Higman's lemma in type theory_](https://doi.org/10.1007/BFb0097789) Daniel Firdlender
 
 ### Motivations for a reboot
 
