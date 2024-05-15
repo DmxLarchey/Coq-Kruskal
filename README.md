@@ -13,13 +13,13 @@ and minimized towards this target.
 
 ## The contents of sub-projects
 
-List of sub-repositories:
-- [`Kruskal-Trees`](https://github.com/DmxLarchey/Kruskal-Trees):
-- [`Kruskal-Finite`](https://github.com/DmxLarchey/Kruskal-Finite):
-- [`Kruskal-AlmostFull`](https://github.com/DmxLarchey/Kruskal-AlmostFull):
-- [`Kruskal-Higman`](https://github.com/DmxLarchey/Kruskal-Higman):
-- [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman):
-- [`Kruskal-Theorems`](https://github.com/DmxLarchey/Kruskal-Theorems): and derives several instances of [Kruskal's tree theorem](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem)
+List of sub-repositories of the core library:
+- [`Kruskal-Trees`](https://github.com/DmxLarchey/Kruskal-Trees): definition for Coq data-structures for representing rose trees, including extensions or updates of the `List` and `Vector` modules of the standard library. Rose trees are viewed under several forms as nested inductive types (nested with `list` or `vec`) and provided with expressive recursors (induction principles);
+- [`Kruskal-Finite`](https://github.com/DmxLarchey/Kruskal-Finite): a relativily compact library to manipulate the notion of finiteness of a type (resp. unary predicate), basically expressing the Coq computable existence of a list spanning exactly the type (resp. predicate). It allows to approach the notion of finiteness in an abstract and modular way; 
+- [`Kruskal-AlmostFull`](https://github.com/DmxLarchey/Kruskal-AlmostFull): the core library defining (inductivelly) the notions of almost full (AF) relations and bar predicates. The library recollects some results from \[2\] up to the constructive form of Ramsey's theorem, and also introduces the notion of surjective relational morphism to transfer the AF property.  
+- [`Kruskal-Higman`](https://github.com/DmxLarchey/Kruskal-Higman): the detailed proof of Higman's lemma, ie the _homeomorphic embedding of lists is AF_, as an introduction to the proof of Veldman's theorem on the simpler case of unary trees (aka lists);   
+- [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman): the detailed proof of a variant of Veldman's theorem \[6\], which is the specific form he proposes for a direct inductive proof of Kruskal's theorem. Shares the same skeleton as [`Kruskal-Higman`](https://github.com/DmxLarchey/Kruskal-Higman) but in a much more complicated setting;
+- [`Kruskal-Theorems`](https://github.com/DmxLarchey/Kruskal-Theorems): derives several instances of [Kruskal's tree theorem](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem) from [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman). Those proofs are much simpler as they just rely on surjective morphisms, the main difficulties being overcome in the proof of Veldman's theorem.
 
 Side contributions and applications:
 - the [`Karp-Miller`](https://github.com/DmxLarchey/Karp-Miller) algorithm for solving the [covering problem for Petri nets](https://en.wikipedia.org/wiki/Petri_net), of which termination is established using almost full relation, in particular, Coquand's version of Ramsey's theorem.
@@ -60,6 +60,7 @@ Veldman's proof is not type theoretic. It is "formalized" in a kind of intuition
 - \[3\] [_Kruskal’s Tree Theorem in a Constructive Theory of Inductive Definitions_](https://doi.org/10.1007/978-94-015-9757-9_21) Monika Seisenberger.
 - \[4\] [_An Interpretation of the Fan Theorem in Type Theory_](https://doi.org/10.1007/3-540-48167-2_7) Daniel Firdlender
 - \[5\] [_Higman's lemma in type theory_](https://doi.org/10.1007/BFb0097789) Daniel Firdlender
+- \[6\] [_An intuitionistic proof of Kruskal's Theorem_](https://doi.org/10.1007/s00153-003-0207-x) Win Veldman
 
 ### Motivations for a reboot
 
