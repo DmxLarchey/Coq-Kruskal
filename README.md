@@ -3,12 +3,12 @@
 ## Summary
 
 This repository only contains descriptions. In particular it does not contain code. 
-The actual Coq code is scattered in [several sub-projects](#The-contents-of-sub-projects).
+The actual Coq code is scattered in [several sub-projects (see below)](#The-contents-of-sub-projects).
 
 The `Coq-Kruskal` project was born after a complete rewrite of a [former constructive Coq proof 
 of Kruskal's tree theorem](https://members.loria.fr/DLarchey/files/Kruskal) with the aim of
-obtaining not only a computer certificate for the theorem, but mainly a proof that can be
-studied by a (motivated enough) human. The Coq proof themselves have been factorized, abstracted
+obtaining not only a computer certificate for the theorem, but mainly carefully structured proof that can be
+studied by a (motivated enough) human. The Coq statements and proof scripts themselves have been factorized, abstracted
 and minimized towards this target.
 
 ## The contents of sub-projects
@@ -42,7 +42,7 @@ Side contributions and applications:
 ### The origins
 
 The idea to implement a constructive proof of [Kruskal's tree theorem](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem)
-in Coq came to my mind in 2015. The statement of Kruskal's tree theorem concerns the closure properties of the notion of _Well Quasi Order_ (WQO). Classically characterized, a WQO `R : X → X → Prop` is a quasi order such that any infinite sequence `s : nat → X` contains a good (ie increasing pair), ie there are `i < j` such that `R sᵢ sⱼ`. However, constructivelly, this characterization is too weak (see below).  
+in Coq came to my mind in 2015. The statement of Kruskal's tree theorem concerns the closure properties of the notion of _Well Quasi Order_ (WQO). Classically characterized, a WQO `R : rel₂ X` (where `rel₂ X := X → X → Prop`) is a quasi order such that any infinite sequence `s : nat → X` contains a good (ie increasing pair), ie there are `i < j` such that `R sᵢ sⱼ`. However, constructivelly, this characterization is too weak (see below).  
 
 Kruskal's tree theorem states: 
 
@@ -52,14 +52,14 @@ The real motivation came after the reading of Jean Goubault-Larrecq's [_A Constr
 
 Then I turned to the work of people arround Thierry Coquand who characterized WQOs as _Almost Full_ (AF) relations using inductive predicates, either the specialized `af` predicate
 ```coq
-Inductive af {X} (R : X → X → Prop) : Prop (or Type) :=
+Inductive af {X} (R : rel₂ X) : Prop (or Type) :=
   | af_full : (∀ x y, R x y) → af R
   | af_lift : (∀ a, af (R↑a)) → af R
 where "R↑a" := (λ x y, R x y ∨ R a x)
 ```
 or the more general `bar` inductive predicate instantiated on the `good` predicate:
 ```coq
-Inductive good {X} (R : X → X → Prop) : list X → Prop :=
+Inductive good {X} (R : rel₂ X) : list X → Prop :=
   | good_stop x y l : y ∈ l → R y x → good R (x::l)
   | good_skip x l : good R l → good R (x::l).
 
@@ -69,13 +69,13 @@ Inductive bar {X} (P : list X → Prop) : list X → Prop (or Type) :=
 ```
 Notice that the characterization of AF relations using sequences
 ```coq
-Definition af_seq {X} (R : X → X → Prop) := ∀ s : nat → X, ∃ i j, i < j ∧ R sᵢ sⱼ
+Definition af_seq {X} (R : rel₂ X) := ∀ s : nat → X, ∃ i j, i < j ∧ R sᵢ sⱼ
 ```
 is weaker that the inductive characterization with eg `af R`. I later discovered this [beautiful intuition by Coquand](https://www.cairn-int.info/journal-revue-internationale-de-philosophie-2004-4-page-483.htm) \[7\] explaining why using sequences to characterizes WQOs or AF relations is problematic constructivelly: the issue comes from the _universal quantification over infinite sequences_ in the type `s : nat → X`, which constructivelly does not to cover sequences of which the enumeration is not given by a law (think of lambda terms).
 
 IMHO, the best introduction the AF relations characterized with a specific inductive predicate can be found in [_Stop when you are Almost-Full: Adventures in constructive termination_](https://doi.org/10.1007/978-3-642-32347-8_17) by Coquand et al, of which the main contribution is a proof of constructive formulation of Ramsey's theorem:
 ```coq
-Theorem af_inter {X} (R T : X → X → Prop) : af R → af T → af (R ∩ T).
+Theorem af_inter {X} (R T : rel₂ X) : af R → af T → af (R ∩ T).
 ```
 However, this paper completely ignores the characterization using `bar` inductive predicates. This alternate characterization is used in Daniel Fridlender's work (a student of Coquand) in both [_An Interpretation of the Fan Theorem in Type Theory_](https://doi.org/10.1007/3-540-48167-2_7) and [_Higman's lemma in type theory_](https://doi.org/10.1007/BFb0097789). This last paper describes a constructive proof of [_Higman's lemma_](https://en.wikipedia.org/wiki/Higman%27s_lemma) avoiding the requirement of decidability. To my understanding, while it was not the first constructive proof of Higman's lemma, it was the first constructive proof of Higman's lemma avoiding the decidability asusmption. 
 
@@ -95,13 +95,13 @@ Inductive WFT X :=
   | WFT_leaf : WFT X
   | WFT_node : (X → WFT X) → WFT X.
 
-Fixpoint af_WFT {X} (R : X → X → Prop) (t : WFT X) : Prop :=
+Fixpoint af_WFT {X} (R : rel₂ X) (t : WFT X) : Prop :=
   match t with
   | WFT_leaf   => ∀ x y, R x y
   | WFT_node δ => ∀a, af_WFT (R↑a) (δ a)
   end.
 
-Theorem af_WFT_equiv {X} (R : X → X → Prop) : af R ↔ {t | af_WFT R t}.
+Theorem af_WFT_equiv {X} (R : rel₂ X) : af R ↔ {t | af_WFT R t}.
 ```
 However the equivalence theorem `af_WFT_equiv` only holds (axiom free) when the `af R` predicate lives in sort `Type`, and not
 when it leave in sort `Prop`. This means one cannot prove `af R → ∃t, af_WFT R t` when `af R : Prop` because this requires a variant of the axiom of choice. This may be one way to understand the use of Brouwer's thesis in the context of Coq type theory.
@@ -113,7 +113,7 @@ Veldman's tailored form of Kruskal's theorem, which I call Veldman's theorem in 
 - the data-structure for rose trees is build over `nat`;
 - Brouwer's thesis only applies to `nat`, ie it could be viewed as
 ```coq
-Axiom Brouwers_thesis : ∀ (R : nat → nat → Prop), af_seq R → ∃ t : WFT nat, af_WFT R t.
+Axiom Brouwers_thesis : ∀ (R : rel₂ nat), af_seq R → ∃ t : WFT nat, af_WFT R t.
 ```
 - the proof requires embedding sub-trees into the nodes on other trees and the type `nat` allows such type theoretic constructions via encodings.
 
@@ -132,7 +132,7 @@ To overcome this issue that occurs only in the `Prop` bounded variant, I had to 
 - but also, critically, they served for discriminating when a relation was _full_, ie when the stump is `WFT_leaf`;
 - and finally, there is also a use for stumps to represent when the sub-type of nodes is empty or not (not explained in here).
 
-I did overlook the last two purposes at first but understanding the role they played lead me search for alternatives that could serve as a replacement for stumps. It turns out that in complement to the `af Rᵢ` property, what is really needed is a mark to discriminate for when `Rᵢ : Xᵢ → Xᵢ → Prop` either live over an empty sub-type `Xᵢ`, or when `Rᵢ` is a full relation, or when we just know that `af Rᵢ` holds. 
+I did overlook the last two purposes at first but understanding the role they played lead me search for alternatives that could serve as a replacement for stumps. It turns out that in complement to the `af Rᵢ` property, what is really needed is a mark to discriminate for when `Rᵢ : rel₂ Xᵢ` either live over an empty sub-type `Xᵢ`, or when `Rᵢ` is a full relation, or when we just know that `af Rᵢ` holds. 
 
 This lead me to switch from stumps to AF witnesses: the data of a mark `wᵢ` and its property wrt `Xᵢ/Rᵢ`. Unfortunalety, AF witnesses do not have a proper well founded structure, but, _and this is the main insight_, you can use them inductivelly to establish properties of `Xᵢ/Rᵢ` that do not talk about the witness `wᵢ`. I did call this notion _well founded induction up to a projection_ and then proved that it is closed under lexicographic products.
 
@@ -142,7 +142,7 @@ Well founded induction up to a projection was the key that unlocked Veldman's ap
 
 Having completed a type theoretic implementation of Veldman's proof, getting rid of Brouwer's thesis on the way, was very satisfying at the time. Technically, the inductive implementation required some further assumptions, eg that the sub-types `Xᵢ` on then nodes were decidable. Some of these details are discussed in [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman). But the final statement of Kruskal's theorem was the one I expected:
 ```coq
-Theorem af_kruskal X (R : X → X → Prop) : af R → af (ltree_homeo_embed R).
+Theorem af_kruskal X (R : rel₂ X) : af R → af (ltree_homeo_embed R).
 ```
 which was quite satisfying indeed. 
 
