@@ -23,9 +23,10 @@ List of sub-repositories of the core library:
 - [`Kruskal-Theorems`](https://github.com/DmxLarchey/Kruskal-Theorems): derives several instances of [Kruskal's tree theorem](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem) from [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman). Those proofs are much simpler as they just rely on surjective morphisms, the main difficulties being overcome in the proof of Veldman's theorem.
 
 Side contributions and applications:
-- [`Quasi-Morphisms`](https://github.com/DmxLarchey/Quasi-Morphisms): standalone explanations on how to transfert AF between relations, as used in the proofs of [`Kruskal-Higman`](https://github.com/DmxLarchey/Kruskal-Higman) and [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman);
+- [`Quasi-Morphisms`](https://github.com/DmxLarchey/Quasi-Morphisms): standalone explanations on [how to transfert AF between relations](https://easychair.org/publications/preprint/M3Km), as used in the proofs of [`Kruskal-Higman`](https://github.com/DmxLarchey/Kruskal-Higman) and [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman);
 - the [`Karp-Miller`](https://github.com/DmxLarchey/Karp-Miller) algorithm for solving the [covering problem for Petri nets](https://en.wikipedia.org/wiki/Petri_net), of which termination is established using almost full relation, in particular, Coquand's version of Ramsey's theorem;
-- [`Friedman-TREE`](https://github.com/DmxLarchey/Friedman-TREE): the construction of [Harvey Friedman's weak `Tree(n)` and `TREE(n)` functions](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem) which are extremelly fast frowing functions that cannot be proved to exist in too weak meta-theories, eg Peano arithmetic.
+- [`Friedman-TREE`](https://github.com/DmxLarchey/Friedman-TREE): the construction of [Harvey Friedman's weak `Tree(n)` and `TREE(n)` functions](https://en.wikipedia.org/wiki/Kruskal%27s_tree_theorem) which are extremelly fast frowing functions that cannot be proved to exist in too weak meta-theories, eg Peano arithmetic;
+- [`Relevant-decidability`](https://github.com/DmxLarchey/Relevant-decidability) a standalone constructive proof of the decidability of _Implicational Relevance Logic_ \[10\] using AF versions of Ramsey's theorem and König's lemma, as also found in [`Kruskal-AlmostFull`](https://github.com/DmxLarchey/Kruskal-AlmostFull) and [`Kruskal-Fan`](https://github.com/DmxLarchey/Kruskal-Fan).
 
 ## Bibliographic references
 
@@ -37,6 +38,8 @@ Side contributions and applications:
 - \[6\] [_An intuitionistic proof of Kruskal's Theorem_](https://doi.org/10.1007/s00153-003-0207-x) Wim Veldman
 - \[7\] [_About Brouwer’s Fan Theorem_](https://www.cairn-int.info/journal-revue-internationale-de-philosophie-2004-4-page-483.htm) Thierry Coquand
 - \[8\] [_Higman’s Lemma and Its Computational Content_](https://doi.org/10.1007/978-3-319-29198-7_11) Helmut Schwichtenberg, Monika Seisenberger, Franziskus Wiesnet.
+- \[9\] [_Quasi Morphisms for Almost Full Relations_](https://easychair.org/publications/preprint/M3Km) Dominique Larchey-Wendling.
+- \[10\] [_Constructive Decision via Redundancy-free Proof-Search_](http://www.loria.fr/~larchey/papers/JAR-2019.pdf) Dominique Larchey-Wendling.
 
 ## Historical remarks on the project
 
@@ -141,19 +144,47 @@ Well founded induction up to a projection was the key that unlocked Veldman's ap
 
 ### Motivations for a reboot
 
-Having completed a type theoretic implementation of Veldman's proof, getting rid of Brouwer's thesis on the way, was very satisfying at the time. Technically, the inductive implementation required some further assumptions, eg that the sub-types `Xᵢ` on then nodes were decidable. Some of these details are discussed in [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman). But the final statement of Kruskal's theorem was the one I expected:
+Having completed a type theoretic implementation of Veldman's proof, getting rid of Brouwer's thesis on the way, was very satisfying at the time. Technically, the inductive implementation required some further assumptions, eg that the sub-types `Xᵢ` on then nodes of arity `i` were decidable. Some of these details are discussed in [`Kruskal-Veldman`](https://github.com/DmxLarchey/Kruskal-Veldman). But the final statement of Kruskal's theorem was the one I expected:
 ```coq
 Theorem af_kruskal X (R : rel₂ X) : af R → af (ltree_homeo_embed R).
 ```
-which was quite satisfying indeed. 
+which was quite satisfying. 
 
-But what do you do with a +30k loc Coq project with lots of redundancy and undecipherable proof scripts that only you can understand? 
-- You have the satisfaction that Coq can type-check it as a valid and axiom free proof. This is undeniably your very first feeling after `Qed`.
-- You can tell yourself: now people are going to be able to actually use Kruskal's theorem in their Coq proofs, to show termination of their fancy functions. However who really needs Kruskal's tree theorem for termination? **Recursive path orderings originally used it** but much shorter proofs were found later on. Ok [`Friedman-TREE`](https://github.com/DmxLarchey/Friedman-TREE) requires it but who is ever going to compute with this monster?
+But what do you do with a +30k loc Coq project with lots of redundancies and undecipherable proof scripts that only you can understand? 
+- You have the satisfaction that Coq can type-check it as a valid and axiom-free proof. This is undeniably your very first feeling after `Qed`.
+- You can tell yourself that people are going to be able to actually use Kruskal's theorem in their Coq proofs, to show termination of their fancy functions. However who really needs Kruskal's tree theorem for termination? [Recursive path orderings originally used it](https://doi.org/10.1016/0304-3975(82)90026-3) but much shorter and direct constructive proofs were found later on. Of course [`Friedman-TREE`](https://github.com/DmxLarchey/Friedman-TREE) requires it, but who is ever going to compute with this monster?
 - You have the satisfaction of having intimatelly understood the inner workings of a complicated pen and paper proof, and even having improved it because of this understanding.
   
-But you would like others to also understand this proof and, to that aim, have your code base serve as a guide and explanation, not as something which is even harder to understand than the original paper. 
+But you would like others to also understand this proof and, to that aim, have your code base serve as a guide and explanation, not as something which is even harder to understand than the original pen&paper proof \[6\]. I tried several to document the proof in the form of a paper but each attempt turned out to miss what I was aiming for, a understandable guide of the mechanized proof.
+
+Several years later, arround late 2021, but also, many more line of Coq code later, devoted to others projects, some of them exploiting parts of the ideas present in the [initial mechanization](https://members.loria.fr/DLarchey/files/Kruskal) like how to smoothly work with rose trees in Coq or how work with `bar` inductive predicates or the `Acc`essibility predicate, but also after sensibly enhancing my skill working with dependent types and dependent pattern matching, I decided to rewrite the whole project with the following ideas:
+- a much improved factorization of the code, avoiding completely coding duplications:
+    - for instance, the `Prop`-bounded and `Type`-bounded version now share the very same code base. There is a compilation switch that generates one version or the other from the same scripts;
+    - the inductive proof Higman's theorem has been removed and replaced with an instance of Veldman/Kruskal's theorem which avoids duplicating two very similar proofs.
+- replacing quasi-morphisms with a relational version of these allowed to drop the decidabilty assumption on sub-types of nodes `Xᵢ : U → Prop`, allowing the removal of large amounts of now unnecessary proofs and assumptions;
+- replacing `list`s with `vec`tors to collect the sons in rose trees allowed for a much better control of side conditions, at the level of typing, allowing the simplify the construction of quasi-morphisms, and in particular, of finiteness proofs;
+- a abstracted approach, dependently typed, allowed for much shortened proofs of finiteness, replacing explicit constructions of spanning lists by hand;
+- a structured code base with better automation and shorter independent proofs that allow for a modular analysing of the proofs:
+    - the longests proofs to be found, [eg those related to quasi-morphisms](https://github.com/DmxLarchey/Kruskal-Veldman/blob/3b1231dc4b49327bcbdfcf3c9bf868916f34ae7a/theories/universe/veldman_kruskal.v#L614), are now less that 70 locs, which is reasonable, compared to the initial project where single proofs weighting above 500 locs were not uncommon;
+    - eventually, this structure favored a split of the code base into several sub-project that could be used somewhat independently.
 
 ### The split
 
-### The end result
+Late 2022 I was contacted by [J. Hughes](http://www.jerome-hugues.net/) because he needed to work with rose trees, and he found the tools that were developped for the [initial mechanization of Kruskal's tree theorem](https://members.loria.fr/DLarchey/files/Kruskal) to be useful for what he wanted. Given that this version was unmaintained, he asked whether I had updated the code base for up to date versions of Coq and if I could share this code.
+
+I did allow him to access the reboot project and then, he asked if the project could be made public so that he could reuse the work and properly reference its source. I decided to split the project and publish the part of it that dealt with the data-types for rose trees, and its dependecies, in the independent project now called [_Kruskal-Trees_](https://github.com/DmxLarchey/Kruskal-Trees).
+
+Half a year later, meeting with the team of [J. Leroux](https://www.labri.fr/perso/leroux/) in Bordeaux to discuss applications of AF relations to Petri nets and the computation of [Karp-Miller coverings](https://github.com/DmxLarchey/Karp-Miller), they asked whether the library that coped with finiteness wouldn't also be of independent interest. With lead sometimes later to the creating of [`Kruskal-Finite`](https://github.com/DmxLarchey/Kruskal-Finite). 
+
+These moves were accompanied to the publication of those sub-libraries as [`opam` packages](https://github.com/coq/opam) for much easier deployment by outsider. Finally, late 2023, I decided that it was time to split the whole project into a satisfying hierarchy of packages, also distributed as `opam` packages. These packages are also individualy documented.
+
+### The paper
+
+It is now time to write a paper about this work. Here are some ideas for the content:
+- it should not reproduce Veldman's proofs, but instead limit itself to the general structure of proofs
+- it *must* explain why and how some issues in Veldman's proof were solved:
+    - not working with the base type `nat` only;
+    - avoiding _Brouwer's thesis_;
+    - replacing the sequence based definition of AF with the inductive version
+    - abstracting quasi-morphisms;
+    - well-foundedness upto
