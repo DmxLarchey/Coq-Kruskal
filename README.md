@@ -33,8 +33,8 @@ Side contributions and applications:
 - \[1\] [_A Constructive Proof of the Topological Kruskal Theorem_](https://doi.org/10.1007/978-3-642-40313-2_3) Jean Goubault-Larrecq.
 - \[2\] [_Stop when you are Almost-Full: Adventures in constructive termination_](https://doi.org/10.1007/978-3-642-32347-8_17) Dimitrios Vytiniotis, Thierry Coquand, David Wahlstedt.
 - \[3\] [_Kruskal’s Tree Theorem in a Constructive Theory of Inductive Definitions_](https://doi.org/10.1007/978-94-015-9757-9_21) Monika Seisenberger.
-- \[4\] [_An Interpretation of the Fan Theorem in Type Theory_](https://doi.org/10.1007/3-540-48167-2_7) Daniel Firdlender
-- \[5\] [_Higman's lemma in type theory_](https://doi.org/10.1007/BFb0097789) Daniel Firdlender
+- \[4\] [_An Interpretation of the Fan Theorem in Type Theory_](https://doi.org/10.1007/3-540-48167-2_7) Daniel Fridlender
+- \[5\] [_Higman's lemma in type theory_](https://doi.org/10.1007/BFb0097789) Daniel Fridlender
 - \[6\] [_An intuitionistic proof of Kruskal's Theorem_](https://doi.org/10.1007/s00153-003-0207-x) Wim Veldman
 - \[7\] [_About Brouwer’s Fan Theorem_](https://www.cairn-int.info/journal-revue-internationale-de-philosophie-2004-4-page-483.htm) Thierry Coquand
 - \[8\] [_Higman’s Lemma and Its Computational Content_](https://doi.org/10.1007/978-3-319-29198-7_11) Helmut Schwichtenberg, Monika Seisenberger, Franziskus Wiesnet.
